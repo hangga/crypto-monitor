@@ -7,8 +7,8 @@ plugins {
 group = "id.web.hangga"
 version = "1.0-SNAPSHOT"
 
-val ktorVersion = "2.3.4"
-val resilience4jVersion = "1.7.1"
+val ktorVersion = "3.3.3"
+val resilience4jVersion = "2.3.0"
 
 repositories {
     mavenCentral()
@@ -33,7 +33,7 @@ dependencies {
     implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
 
     // Logging
-    implementation("ch.qos.logback:logback-classic:1.4.6")
+    implementation("ch.qos.logback:logback-classic:1.5.21")
 
 //    testImplementation("org.jetbrains.kotlin:kotlin-test")
     testImplementation(kotlin("test"))
