@@ -38,9 +38,9 @@ fun Application.module() {
 
     // --- Routing ---
     routing {
-//        get("/") {
-//            call.respondText("Crypto Monitor running - see /price and /stream/price")
-//        }
+        get("/") {
+            call.respondText("Crypto Monitor running - see /price and /stream/price")
+        }
 
         // Register price routes
         PriceRoutes.register(this, clientService, cache, cbWrapper, priceFlow)
