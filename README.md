@@ -92,6 +92,10 @@ or using the JAR:
 java -jar build/libs/crypto-monitor-all.jar
 ```
 
+### 3. Local test
+
+![run](https://github.com/hangga/crypto-monitor/blob/main/crypto-monitor.gif?raw=true)
+
 ---
 
 ## **Endpoints**
