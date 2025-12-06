@@ -21,7 +21,7 @@ class PriceFlow(
                 // update cache
                 cache.update(p)
                 emit(p)
-            } catch (e: Exception) {
+            } catch (_: Exception) {
                 val last = cache.get()
                 if (last != null) {
                     emit(last.copy(source = "fallback"))

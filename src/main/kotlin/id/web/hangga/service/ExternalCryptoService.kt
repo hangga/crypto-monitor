@@ -1,23 +1,22 @@
 package id.web.hangga.service
 
+import id.web.hangga.resilience.CircuitBreakerConfigWrapper
+import io.github.resilience4j.circuitbreaker.CallNotPermittedException
+import io.github.resilience4j.circuitbreaker.CircuitBreaker.decorateCallable
 import io.ktor.client.*
 import io.ktor.client.call.*
-import io.ktor.client.request.*
-import io.ktor.client.statement.*
 import io.ktor.client.engine.cio.*
 import io.ktor.client.plugins.contentnegotiation.*
+import io.ktor.client.request.*
+import io.ktor.client.statement.*
 import io.ktor.serialization.kotlinx.json.*
+import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.double
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import org.slf4j.LoggerFactory
-import id.web.hangga.resilience.CircuitBreakerConfigWrapper
-import io.github.resilience4j.circuitbreaker.CallNotPermittedException
-import io.github.resilience4j.circuitbreaker.CircuitBreaker
-import io.github.resilience4j.circuitbreaker.CircuitBreaker.decorateCallable
 import java.util.concurrent.Callable
-import kotlinx.coroutines.runBlocking
-import kotlinx.serialization.json.double
 
 class ExternalCryptoService(private val apiUrl: String?) {
     private val client = HttpClient(CIO) {
@@ -43,7 +42,7 @@ class ExternalCryptoService(private val apiUrl: String?) {
     }
 
     // versi stabil dengan CircuitBreaker untuk Kotlin 2.x
-    suspend fun fetchPriceWithCircuitBreaker(cbWrapper: CircuitBreakerConfigWrapper): CryptoPrice {
+    fun fetchPriceWithCircuitBreaker(cbWrapper: CircuitBreakerConfigWrapper): CryptoPrice {
         val callable = Callable {
             runBlocking {
                 fetchPrice()

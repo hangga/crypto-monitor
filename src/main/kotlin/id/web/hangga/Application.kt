@@ -23,17 +23,8 @@ fun Application.module() {
 
     val config = ConfigFactory.load()
 
-    println("IKIIII-->"+config.toString())
-
     val apiUrl = config.getString("ktor.crypto.externalApiUrl")
     val pollMs = config.getLong("ktor.crypto.pollIntervalMs")
-    // --- Baca konfigurasi crypto dari application.conf ---
-//    val cryptoConfig = environment.config.config("ktor.crypto")
-//    val apiUrl = cryptoConfig.property("externalApiUrl").getString()
-//    val apiUrl = "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd"
-//    val pollMs = 2000L//cryptoConfig.property("pollIntervalMs").getString().toLong()
-//    val pollMs = cryptoConfig.property("pollIntervalMs").getString().toLong()
-
     // --- CircuitBreaker ---
     val cbWrapper = CircuitBreakerConfigWrapper.createDefault()
 
