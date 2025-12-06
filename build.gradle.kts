@@ -2,6 +2,8 @@ import org.gradle.kotlin.dsl.kotlin
 
 plugins {
     kotlin("jvm") version "2.2.20"
+    kotlin("plugin.serialization") version "2.2.20"   // <--- WAJIB
+    application
 }
 
 group = "id.web.hangga"
@@ -9,33 +11,50 @@ version = "1.0-SNAPSHOT"
 
 val ktorVersion = "3.3.3"
 val resilience4jVersion = "2.3.0"
+val coroutinesVersion = "1.9.0" // versi terbaru & aman
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
+
+    // -------------------------
+    // KTOR SERVER
+    // -------------------------
     implementation("io.ktor:ktor-server-core:$ktorVersion")
     implementation("io.ktor:ktor-server-netty:$ktorVersion")
     implementation("io.ktor:ktor-server-content-negotiation:$ktorVersion")
     implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
 
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
-
-    // Resilience4j
-    implementation("io.github.resilience4j:resilience4j-core:$resilience4jVersion")
-    implementation("io.github.resilience4j:resilience4j-kotlin:$resilience4jVersion")
-
-    // HTTP client for calling external API
+    // -------------------------
+    // KTOR CLIENT
+    // -------------------------
     implementation("io.ktor:ktor-client-core:$ktorVersion")
     implementation("io.ktor:ktor-client-cio:$ktorVersion")
     implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
     implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
 
-    // Logging
+    // -------------------------
+    // COROUTINES (terbaru)
+    // -------------------------
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
+
+    // -------------------------
+    // RESILIENCE4J
+    // -------------------------
+    implementation("io.github.resilience4j:resilience4j-core:$resilience4jVersion")
+    implementation("io.github.resilience4j:resilience4j-circuitbreaker:$resilience4jVersion")
+    implementation("io.github.resilience4j:resilience4j-kotlin:$resilience4jVersion")
+
+    // -------------------------
+    // LOGGING
+    // -------------------------
     implementation("ch.qos.logback:logback-classic:1.5.21")
 
-//    testImplementation("org.jetbrains.kotlin:kotlin-test")
+    // -------------------------
+    // TESTING
+    // -------------------------
     testImplementation(kotlin("test"))
 }
 
@@ -45,4 +64,16 @@ tasks.test {
 
 kotlin {
     jvmToolchain(17)
+}
+
+application {
+    mainClass.set("id.web.hangga.ApplicationKt")
+}
+
+sourceSets {
+    main {
+        resources {
+            srcDir("src/main/resources")
+        }
+    }
 }
