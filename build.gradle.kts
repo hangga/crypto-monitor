@@ -3,6 +3,7 @@ import org.gradle.kotlin.dsl.kotlin
 plugins {
     kotlin("jvm") version "2.2.20"
     kotlin("plugin.serialization") version "2.2.20"   // <--- WAJIB
+    id("com.github.johnrengelman.shadow") version "8.1.1"
     application
 }
 
@@ -68,6 +69,14 @@ kotlin {
 
 application {
     mainClass.set("id.web.hangga.ApplicationKt")
+}
+
+tasks {
+    shadowJar {
+        archiveBaseName.set("crypto-monitor")
+        archiveClassifier.set("")
+        archiveVersion.set("")
+    }
 }
 
 sourceSets {
