@@ -2,6 +2,7 @@ package id.web.hangga.resilience
 
 import io.github.resilience4j.circuitbreaker.CircuitBreaker
 import io.github.resilience4j.circuitbreaker.CircuitBreakerConfig
+import io.github.resilience4j.kotlin.circuitbreaker.executeSuspendFunction
 import java.time.Duration
 
 class CircuitBreakerConfigWrapper private constructor(
@@ -16,5 +17,9 @@ class CircuitBreakerConfigWrapper private constructor(
                 .build()
             return CircuitBreakerConfigWrapper(CircuitBreaker.of("cryptoApiCB", config))
         }
+    }
+
+    suspend fun <T> execute(block: suspend () -> T): T {
+        return breaker.executeSuspendFunction(block)
     }
 }
