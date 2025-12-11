@@ -92,7 +92,42 @@ or using the JAR:
 java -jar build/libs/crypto-monitor-all.jar
 ```
 
-### 3. Local test
+### 3. Local Test
+```bash
+$ curl http://localhost:8080/stream/price
+```
+
+#### Example Output:
+
+```bash
+data: {"id":"bitcoin","currency":"usd","price":90209.0}
+
+data: {"id":"bitcoin","currency":"usd","price":90209.0}
+
+data: {"id":"bitcoin","currency":"usd","price":90209.0}
+
+data: {"id":"bitcoin","currency":"usd","price":90209.0}
+
+data: {"id":"bitcoin","currency":"usd","price":90209.0}
+
+data: {"id":"bitcoin","currency":"usd","price":90209.0,"source":"fallback"}
+
+data: {"id":"bitcoin","currency":"usd","price":90209.0,"source":"fallback"}
+
+data: {"id":"bitcoin","currency":"usd","price":90209.0,"source":"fallback"}
+
+data: {"id":"bitcoin","currency":"usd","price":90209.0,"source":"fallback"}
+
+data: {"id":"bitcoin","currency":"usd","price":90209.0,"source":"fallback"}
+
+data: {"id":"bitcoin","currency":"usd","price":90209.0,"source":"fallback"}
+
+data: {"id":"bitcoin","currency":"usd","price":90209.0,"source":"fallback"}
+
+data: {"id":"bitcoin","currency":"usd","price":90209.0,"source":"fallback"}
+```
+
+#### Demo
 
 ![run](https://github.com/hangga/crypto-monitor/blob/main/crypto-monitor.gif?raw=true)
 
