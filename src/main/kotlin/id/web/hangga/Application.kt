@@ -13,12 +13,25 @@ import io.ktor.server.netty.*
 import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import org.slf4j.LoggerFactory
 
 fun main() {
-    embeddedServer(Netty, port = 8080, module = Application::module).start(wait = true)
+    val port = System.getenv("PORT")?.toInt() ?: 8080
+
+    embeddedServer(Netty, port = port, module = Application::module)
+        .start(wait = true)
 }
 
+private val logger = LoggerFactory.getLogger("StartupLogger")
+
 fun Application.module() {
+    val bootStart = System.currentTimeMillis()
+
+    environment.monitor.subscribe(ApplicationStarted) {
+        val duration = System.currentTimeMillis() - bootStart
+        logger.info("Application fully started in $duration ms")
+    }
+
     install(ContentNegotiation) { json() }
 
     val config = CryptoConfig.load()
