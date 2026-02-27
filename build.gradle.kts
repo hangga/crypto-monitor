@@ -10,7 +10,7 @@ plugins {
 group = "id.web.hangga"
 version = "1.0-SNAPSHOT"
 
-val ktorVersion = "3.3.3"
+val ktorVersion = "3.4.0"
 val resilience4jVersion = "2.3.0"
 val coroutinesVersion = "1.9.0" // versi terbaru & aman
 
@@ -51,7 +51,7 @@ dependencies {
     // -------------------------
     // LOGGING
     // -------------------------
-    implementation("ch.qos.logback:logback-classic:1.5.21")
+    implementation("ch.qos.logback:logback-classic:1.5.25")
 
     // -------------------------
     // TESTING
