@@ -66,10 +66,6 @@ dependencies {
 tasks.test {
     useJUnitPlatform()
 }
-//
-//tasks.processResources {
-//    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-//}
 
 kotlin {
     jvmToolchain(17)
@@ -86,11 +82,3 @@ tasks {
         archiveVersion.set("")
     }
 }
-
-//sourceSets {
-//    main {
-//        resources {
-//            srcDir("src/main/resources")
-//        }
-//    }
-//}

@@ -22,15 +22,9 @@ fun main() {
         .start(wait = true)
 }
 
-private val logger = LoggerFactory.getLogger("StartupLogger")
 
 fun Application.module() {
     val bootStart = System.currentTimeMillis()
-
-    environment.monitor.subscribe(ApplicationStarted) {
-        val duration = System.currentTimeMillis() - bootStart
-        logger.info("Application fully started in $duration ms")
-    }
 
     install(ContentNegotiation) { json() }
 
