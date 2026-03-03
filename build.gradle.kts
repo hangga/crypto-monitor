@@ -26,7 +26,6 @@ dependencies {
     implementation("io.ktor:ktor-server-core:$ktorVersion")
     implementation("io.ktor:ktor-server-netty:$ktorVersion")
     implementation("io.ktor:ktor-server-content-negotiation:$ktorVersion")
-    implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
 
     // -------------------------
     // KTOR CLIENT
@@ -67,6 +66,10 @@ dependencies {
 tasks.test {
     useJUnitPlatform()
 }
+//
+//tasks.processResources {
+//    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+//}
 
 kotlin {
     jvmToolchain(17)
@@ -84,10 +87,10 @@ tasks {
     }
 }
 
-sourceSets {
-    main {
-        resources {
-            srcDir("src/main/resources")
-        }
-    }
-}
+//sourceSets {
+//    main {
+//        resources {
+//            srcDir("src/main/resources")
+//        }
+//    }
+//}

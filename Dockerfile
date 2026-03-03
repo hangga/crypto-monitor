@@ -1,20 +1,18 @@
 # =========================
 # Stage 1: Build
 # =========================
-FROM gradle:8.7-jdk17 AS builder
+FROM eclipse-temurin:17-jdk AS builder
 
 WORKDIR /app
 
-# Cache dependency layer
-COPY build.gradle.kts settings.gradle.kts gradle.properties* ./
-COPY gradle ./gradle
-RUN gradle dependencies --no-daemon
+# Copy semua file
+COPY . .
 
-# Copy source
-COPY src ./src
+# Beri permission gradlew
+RUN chmod +x ./gradlew
 
 # Build fat jar
-RUN gradle shadowJar --no-daemon
+RUN ./gradlew shadowJar --no-daemon
 
 # Generate CDS archive (improves startup)
 RUN java -Xshare:dump -jar build/libs/crypto-monitor.jar || true
@@ -37,14 +35,4 @@ EXPOSE 8080
 USER nonroot
 
 # JVM optimized for fast startup
-ENTRYPOINT [
-  "java",
-  "-XX:+UseContainerSupport",
-  "-XX:MaxRAMPercentage=75",
-  "-XX:+TieredCompilation",
-  "-XX:TieredStopAtLevel=1",
-  "-XX:+UseSerialGC",
-  "-Xshare:on",
-  "-jar",
-  "app.jar"
-]
+ENTRYPOINT ["java","-XX:+UseContainerSupport","-XX:MaxRAMPercentage=75","-XX:+TieredCompilation","-XX:TieredStopAtLevel=1","-XX:+UseSerialGC","-Xshare:on","-jar","app.jar"]
