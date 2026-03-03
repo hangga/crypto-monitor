@@ -1,3 +1,5 @@
+@file:Suppress("JSON_FORMAT_REDUNDANT_DEFAULT")
+
 package id.web.hangga
 
 import id.web.hangga.config.CryptoConfig
@@ -6,6 +8,8 @@ import id.web.hangga.routes.PriceRoutes
 import id.web.hangga.service.ExternalCryptoService
 import id.web.hangga.service.FallbackCache
 import id.web.hangga.stream.PriceFlow
+import io.ktor.client.HttpClient
+import io.ktor.client.engine.cio.CIO
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
 import io.ktor.server.engine.*
@@ -16,6 +20,14 @@ import io.ktor.server.routing.*
 import org.slf4j.LoggerFactory
 
 fun main() {
+    // Force init serialization
+    kotlinx.serialization.json.Json { }
+
+    // Force Resilience4j init
+    io.github.resilience4j.circuitbreaker.CircuitBreaker.ofDefaults("warmup")
+
+    // Optional: initialize client
+    HttpClient(CIO).close()
     val port = System.getenv("PORT")?.toInt() ?: 8080
 
     embeddedServer(Netty, port = port, module = Application::module)
