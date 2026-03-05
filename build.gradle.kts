@@ -10,7 +10,6 @@ plugins {
 group = "id.web.hangga"
 version = "1.0-SNAPSHOT"
 
-val ktorVersion = "3.4.0"
 val resilience4jVersion = "2.3.0"
 val coroutinesVersion = "1.9.0" // versi terbaru & aman
 
@@ -20,30 +19,34 @@ repositories {
 
 dependencies {
 
+    implementation(platform("io.ktor:ktor-bom:3.4.0"))
+
     // -------------------------
     // KTOR SERVER
     // -------------------------
-    implementation("io.ktor:ktor-server-core:$ktorVersion")
-    implementation("io.ktor:ktor-server-netty:$ktorVersion")
-    implementation("io.ktor:ktor-server-content-negotiation:$ktorVersion")
+    implementation("io.ktor:ktor-server-core")
+    implementation("io.ktor:ktor-server-netty")
+    implementation("io.ktor:ktor-server-content-negotiation")
 
     // -------------------------
     // KTOR CLIENT
     // -------------------------
-    implementation("io.ktor:ktor-client-core:$ktorVersion")
-    implementation("io.ktor:ktor-client-cio:$ktorVersion")
-    implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
-    implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
+    implementation("io.ktor:ktor-serialization-kotlinx-json")
+    implementation("io.ktor:ktor-client-core")
+    implementation("io.ktor:ktor-client-cio")
+    implementation("io.ktor:ktor-client-content-negotiation")
 
     // -------------------------
-    // COROUTINES (terbaru)
+    // COROUTINES (latest)
     // -------------------------
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
 
     // -------------------------
     // RESILIENCE4J
     // -------------------------
-    implementation("io.github.resilience4j:resilience4j-core:$resilience4jVersion")
+    implementation("io.github.resilience4j:resilience4j-core:$resilience4jVersion") {
+        exclude(group = "org.slf4j", module = "slf4j-api")
+    }
     implementation("io.github.resilience4j:resilience4j-circuitbreaker:$resilience4jVersion")
     implementation("io.github.resilience4j:resilience4j-kotlin:$resilience4jVersion")
 
@@ -59,20 +62,23 @@ dependencies {
 
     testImplementation("io.mockk:mockk:1.13.12")
     testImplementation("app.cash.turbine:turbine:1.0.0")
-    testImplementation("io.ktor:ktor-server-test-host-jvm:$ktorVersion")
+    testImplementation("io.ktor:ktor-server-test-host-jvm")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.9.0")
 }
 
 tasks.test {
     useJUnitPlatform()
 }
-//
-//tasks.processResources {
-//    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-//}
 
 kotlin {
     jvmToolchain(17)
+}
+
+kotlin {
+    compilerOptions {
+        freeCompilerArgs.add("-Xno-param-assertions")
+        freeCompilerArgs.add("-Xno-call-assertions")
+    }
 }
 
 application {
@@ -84,13 +90,15 @@ tasks {
         archiveBaseName.set("crypto-monitor")
         archiveClassifier.set("")
         archiveVersion.set("")
+        minimize()
     }
 }
 
-//sourceSets {
-//    main {
-//        resources {
-//            srcDir("src/main/resources")
-//        }
-//    }
-//}
+tasks.withType<Jar> {
+    isReproducibleFileOrder = true
+    isPreserveFileTimestamps = false
+}
+
+configurations.all {
+    exclude(group = "org.fusesource.jansi")
+}
