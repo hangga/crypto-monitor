@@ -98,3 +98,7 @@ tasks.withType<Jar> {
     isReproducibleFileOrder = true
     isPreserveFileTimestamps = false
 }
+
+configurations.all {
+    exclude(group = "org.fusesource.jansi")
+}
