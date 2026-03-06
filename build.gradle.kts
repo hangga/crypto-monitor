@@ -85,13 +85,32 @@ application {
     mainClass.set("id.web.hangga.ApplicationKt")
 }
 
-tasks {
-    shadowJar {
-        archiveBaseName.set("crypto-monitor")
-        archiveClassifier.set("")
-        archiveVersion.set("")
-        minimize()
+//tasks {
+//    shadowJar {
+//        archiveBaseName.set("crypto-monitor")
+//        archiveClassifier.set("")
+//        archiveVersion.set("")
+//
+////        minimize()
+//
+//        mergeServiceFiles {
+//            include("META-INF/services/*")
+//        }
+//    }
+//}
+
+tasks.shadowJar {
+    archiveBaseName.set("crypto-monitor")
+    archiveClassifier.set("")
+    archiveVersion.set("")
+
+    minimize {
+        exclude(dependency("io.ktor:.*"))
+        exclude(dependency("org.jetbrains.kotlinx:.*"))
+        exclude(dependency("ch.qos.logback:.*"))
     }
+
+    mergeServiceFiles()
 }
 
 tasks.withType<Jar> {
