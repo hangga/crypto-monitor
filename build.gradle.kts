@@ -25,7 +25,7 @@ dependencies {
     // KTOR SERVER
     // -------------------------
     implementation("io.ktor:ktor-server-core")
-    implementation("io.ktor:ktor-server-netty")
+    implementation("io.ktor:ktor-server-cio")
     implementation("io.ktor:ktor-server-content-negotiation")
 
     // -------------------------
