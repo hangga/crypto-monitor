@@ -85,20 +85,6 @@ application {
     mainClass.set("id.web.hangga.ApplicationKt")
 }
 
-//tasks {
-//    shadowJar {
-//        archiveBaseName.set("crypto-monitor")
-//        archiveClassifier.set("")
-//        archiveVersion.set("")
-//
-////        minimize()
-//
-//        mergeServiceFiles {
-//            include("META-INF/services/*")
-//        }
-//    }
-//}
-
 tasks.shadowJar {
     archiveBaseName.set("crypto-monitor")
     archiveClassifier.set("")
