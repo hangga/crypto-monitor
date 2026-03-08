@@ -47,27 +47,7 @@ Uses `ConfigFactory.load()` to read `application.conf`.
 
 ## **Architecture Overview**
 
-```
- ┌────────────────┐      ┌──────────────────────┐
- │   Web Client   │ ---> │     Ktor Server      │
- └────────────────┘      └──────────┬───────────┘
-                                    │
-                          ┌─────────┴─────────┐
-                          │   PriceRoutes     │
-                          └─────────┬─────────┘
-                                    │
-                      ┌─────────────┴─────────────────┐
-                      │    PriceFlow (Kotlin Flow)    │
-                      └─────────────┬─────────────────┘
-                                    │
-                      ┌─────────────┴─────────────────┐
-                      │   ExternalCryptoService (CB)  │
-                      └─────────────┬─────────────────┘
-                                    │
-                          ┌─────────┴──────────┐
-                          │   Fallback Cache   │
-                          └────────────────────┘
-```
+![diagram](https://github.com/hangga/crypto-monitor/blob/main/diagram.png?raw=true)
 
 ---
 
